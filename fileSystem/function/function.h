@@ -32,7 +32,6 @@ int my_read(int fd,int len);
 int do_read();
 //退出文件系统:将虚拟磁盘内容写入文件，释放用户文件打开表和虚拟磁盘空间的内存
 int my_exit();
-
-
+#include <time.h>
 #include <stdio.h>
 #endif
