@@ -28,10 +28,6 @@ void initSys(){
     return;*/
 
 }
-//启动文件系统执行shell
-void sysStart(){
-    printf("sysStart 执行了\n");
-}
 //文件格式化
 void my_format(File* disk){
 //  引导块 BLOCK0
@@ -75,28 +71,54 @@ void my_format(File* disk){
 }
 
 //进入指定目录
-void my_cd(char *dirname);
+void my_cd(char *dirname){
+    printf("my_cd执行了\n");
+}
 //1.在当前目录下创建目录 2.在指定目录下创建目录
-void my_mkdir(char *dirname);
+void my_mkdir(char *dirname){
+    printf("my_mkdir执行了\n");
+}
 //删除目录，该目录不一定是当前目录下
-void my_rmdir(char *dirname);
+void my_rmdir(char *dirname){
+    printf("my_rmdir执行了\n");
+}
 //列出指定目录的子目录
-void my_ls(char *dirname);
+void my_ls(char *dirname){
+    printf("my_ls执行了\n");
+}
 //创建文件 1.在当前目录下创建 2.在指定目录下创建
-int my_create(char filename);
+int my_create(char* filename){
+    printf("my_create执行了\n");
+}
 //删除文件
-void my_rm(char *filename);
+void my_rm(char *filename){
+    printf("my_rm执行了\n");
+}
 //打开文件 返回文件描述符
-int my_open(int fd);
+int my_open(int fd){
+    printf("my_open执行了\n");
+}
 //关闭文件
-void my_close(int fd);
+void my_close(int fd){
+    printf("my_close执行了\n");
+}
 //写文件(用户层):获取用户输入，以及输入位置
-int my_write(int fd);
+int my_write(int fd){
+    printf("my_write执行了\n");
+}
 //写文件(物理层)
-int do_write(int fd,char* text,int len,int position);
+int do_write(int fd,char* text,int len,int position){
+    printf("do_write执行了\n");
+}
 //读文件(用户层):检查合法性（fd,len）
-int my_read(int fd,int len);
+int my_read(int fd){
+    printf("my_read执行了\n");
+}
 //读文件(物理层):读出指定文件从读写指针开始长度为指定长度的内容到text数组中
-int do_read();
+int do_read(){
+    printf("do_read执行了\n");
+}
 //退出文件系统:将虚拟磁盘内容写入文件，释放用户文件打开表和虚拟磁盘空间的内存
-int my_exit();
+int my_exit(){
+    printf("my_exit执行了\n");
+}
