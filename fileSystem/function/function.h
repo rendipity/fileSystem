@@ -11,13 +11,13 @@ void my_mkdir(char *dirname);
 //删除目录，该目录不一定是当前目录下
 void my_rmdir(char *dirname);
 //列出指定目录的子目录
-void my_ls(char *dirname);
+void my_ls();
 //创建文件 1.在当前目录下创建 2.在指定目录下创建
 int my_create(char* filename);
 //删除文件
 void my_rm(char *filename);
 //打开文件 返回文件描述符
-int my_open(int fd);
+int my_open(char* filename);
 //关闭文件
 void my_close(int fd);
 //写文件(用户层):获取用户输入，以及输入位置

@@ -1,5 +1,5 @@
 #include "shell.h"
-#include "stdio.h"
+#include <stdio.h>
 #include "../global/global.h"
 #include "../function/function.h"
 //cd xxx
@@ -35,7 +35,7 @@ void getArguments(char* cmd,char* args){
     gets(input);
     sscanf(input,"%s %s",cmd,args);
 }
-void action(char* cmd,char* args){
+int action(char* cmd,char* args){
     if(strcmp(cmd,"help")==0){
         if(strcmp(args,"")!=0){
             printf("%s : too many arguments\n",cmd);
@@ -87,7 +87,7 @@ void action(char* cmd,char* args){
         }
     }
     if(strcmp(cmd,"rmdir")==0){
-        if(argc!=2){
+        if(strcmp(args,"")==0){
             printf("%s need [directory name]\n",cmd);
             return -1;
         }
@@ -143,14 +143,14 @@ void action(char* cmd,char* args){
             return -1;
         }
         else{
-            my_close(a);
+            my_close(atoi(args));
             return 0;
         }
     }
 
     if(strcmp(cmd,"write")==0){
         if(strcmp(args,"")==0||atoi(args)==0){
-            printf("usage %s [fd] [write method]\n",argv[0]);
+            printf("%s need [fd] [write method]\n",cmd);
             return -1;
         }
         else{
@@ -163,15 +163,14 @@ void action(char* cmd,char* args){
         }
     }
 
-    if(strcmp(argv[0],"read")==0){
+    if(strcmp(cmd,"read")==0){
         if(strcmp(args,"")==0||atoi(args)==0){
             printf("%s need [fd num]\n",args);
             return -1;
         }
         else{
             int fd=atoi(args);
-            if(my_read(fd)==0)
-                printf("read fd %d with %d bytes\n",a,len);
+            my_read(fd)
             return 0;
         }
     }
@@ -189,5 +188,5 @@ void sysStart(){
         if(result==-2)
             break;
     }
-    printf("sysStart 结束了\n")
+    printf("sysStart 结束了\n");
 }

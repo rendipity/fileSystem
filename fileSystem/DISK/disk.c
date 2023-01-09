@@ -1,10 +1,8 @@
 #include "disk.h"
-#include "../global/global.h"
-#include "../util/util.h"
 void addFCB(FCB fcb,int blockNum){
     int offset=blockNum*BLOCKSIZE;
     fseek(DISK,offset,SEEK_SET);
-    fwrite(fcb,sizeof(FCB),1,DISK);
+    fwrite(&fcb,sizeof(FCB),1,DISK);
 }
 void FATchange(int loc,int sign){
     FAT1[loc]=sign;
@@ -25,21 +23,21 @@ void initDirectoryBlock(int blockNum,int parentBlockNum){
     FCB fcb;
     strcpy(fcb.filename,".");
     fcb.attribute=DIRECTORY;
-    NowTime(fcb.time);
+    NowTime(&fcb.time);
     fcb.firstBlock=blocknum;//指向当前目录
     fcb.length=sizeof(FCB);
     addChildFCB(fcb,blocknum);
 //..目录
     strcpy(fcb.name,"..");
     fcb.attribute=DIRECTORY;
-    NowTime(fcb.time);
+    NowTime(&fcb.time);
     fcb.firstBlock=parentBlockNum;//指向父目录
     fcb.length=sizeof(FCB);
     addChildFCB(fcb,blocknum);
 }
 void addChildFCB(FCB fcb,int blockNum){
     fseek(DISK,blockNum*BLOCKSIZE+presentFCB.length,SEEK_SET);
-    fwrite(fcb,sizeof(FCB),1,DISK);
+    fwrite(&fcb,sizeof(FCB),1,DISK);
     presentFCB.length+=sizeof(FCB);
     FCBReload();
 }

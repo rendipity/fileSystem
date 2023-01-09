@@ -36,7 +36,7 @@ typedef struct FCB{
 #define BLOCKNUM 1000
 #define END 65535
 #define FREE 0
-#define USED=-1
+#define USED -1
 #define ROOTBLOCKNUM 2
 #define MAXOPENFILE 10
 #define FCBSIZE 48

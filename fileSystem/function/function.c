@@ -6,9 +6,9 @@
 void initSys(){
     printf("initSys 执行了\n");
     //磁盘文件不存在
-    if((DISK=fopen(sysName,"a+",))==NULL){
+    if((DISK=fopen(sysName,"a+"))==NULL){
         DISK=fopen(sysName,"r+");
-        my_format(DISK)
+        my_format(DISK);
     }
     //取出引导块判断是否格式化
     if(fread(&block0,sizeof (BLOCK0),1,DISK)==1){
@@ -29,7 +29,7 @@ void initSys(){
 
 }
 //文件格式化
-void my_format(File* disk){
+void my_format(FILE* disk){
 //  引导块 BLOCK0
     strcpy(block0.diskName,sysName);
     strcpy(block0.info,"BlockSize:1024B\nBlockNum:1000 DiskSize:1024000B");
@@ -83,7 +83,7 @@ void my_rmdir(char *dirname){
     printf("my_rmdir执行了\n");
 }
 //列出指定目录的子目录
-void my_ls(char *dirname){
+void my_ls(){
     printf("my_ls执行了\n");
 }
 //创建文件 1.在当前目录下创建 2.在指定目录下创建
@@ -95,7 +95,7 @@ void my_rm(char *filename){
     printf("my_rm执行了\n");
 }
 //打开文件 返回文件描述符
-int my_open(int fd){
+int my_open(char* filename){
     printf("my_open执行了\n");
 }
 //关闭文件

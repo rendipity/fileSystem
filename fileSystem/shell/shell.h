@@ -3,5 +3,5 @@
 void sysStart();
 void help();
 void getArguments(char* cmd,char* args);
-void action(char* cmd,char* args);
+int action(char* cmd,char* args)
 #endif
