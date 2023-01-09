@@ -1,7 +1,6 @@
 #include "function/function.h"
 #include "global/global.h"
 char sysName[20]="virtualDisk";
-BLOCK0 block0;
 char pwd[80];
 FILE * DISK;
 BLOCK0 block0;

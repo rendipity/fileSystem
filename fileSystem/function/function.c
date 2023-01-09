@@ -19,13 +19,13 @@ void initSys(){
     }
     //进行其他初始化操作
     strcpy(pwd,"/");//设置当前目录
-    getFCB(&presentFCB,5,0);//将根目录设置成当前内存中的FCB
-    getFAT(FAT1,FAT1_LOCATON);//加载FAT1
-    getFAT(FAT2,FAT2_LOCATON);//加载FAT2
-    //初始化文件打开表
+    getFCB(&presentFCB,5);//将根目录设置成当前内存中的FCB
+    getFAT(FAT1,1);//加载FAT1
+    getFAT(FAT2,3);//加载FAT2
+   /* //初始化文件打开表
     for(int i=0;i<MAX_FD_NUM;i++)
         uopenlist[i].topenfile=FREE;//全部设置成0
-    return;
+    return;*/
 
 }
 //启动文件系统执行shell
@@ -34,7 +34,7 @@ void sysStart(){
 }
 //文件格式化
 void my_format(File* disk){
-// 引导块 BLOCK0
+//  引导块 BLOCK0
     strcpy(block0.diskName,sysName);
     strcpy(block0.info,"BlockSize:1024B\nBlockNum:1000 DiskSize:1024000B");
     block0.root = ROOTSTART;
@@ -44,22 +44,32 @@ void my_format(File* disk){
 //FAT
     unsigned short fat[BLOCKNUM*2]
     for (int i = 0; i < BLOCKNUM*2; ++i) {
-        if(i<5)
-            fat[i]=USED;
-        else
             fat[i]=FREE;
     }
+    fat[0]=USED;
+    fat[1]=2;
+    fat[2]=END;
+    fat[3]=4;
+    fat[4]=END;
     fseek(DISK,1*BLOCKSIZE,SEEK_SET);
     fwrite(fat,sizeof(unsigned short),BLOCK_NUMS*2,DISK);
-//根数据区
+//根目录
     FCB rootFCB;
     strcpy(rootFCB.filename,"/");
-    rootFCB.attribute = DIRECTORY;       //类型-目录
-    rootFCB.free = FREE;        //已使用
+    rootFCB.attribute = DIRECTORY;
+    rootFCB.free = FREE;
     NowTime(&rootFCB.time);
-    rootFCB.baseBlockNum = 5;       //起始盘块号
+    rootFCB.distributedBlockNum=ROOTBLOCKNUM;
+    for (int i = 0; i < 50; ++i) {
+        rootFCB.blockUsedSize[i]=0;
+    }
+    rootFCB.firstBlock = 5;       //起始盘块号
     rootFCB.length = sizeof(FCB);     //长度
-    FATchange(5,END);
+    int i = 0;
+    for (;i < ROOTBLOCKNUM; ++i) {
+        FATchange(5+i,6+i);
+    }
+    FATchange(5+i,END);
     addFCB(rootFCB,5);
     initDirectoryBlock(5);
 }

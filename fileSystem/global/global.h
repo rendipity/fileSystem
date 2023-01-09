@@ -22,7 +22,6 @@ typedef struct FCB{
     unsigned short firstBlock;
     unsigned long length;
     char free;
-    unsigned short baseBlockNum;
 }FCB;
     extern char sysName[];
     extern FILE * DISK;
